@@ -32,10 +32,8 @@ function peek(stack) {
 
 function isEmpty(stack) {
   if (stack.top === null) {
-    console.log(true);
     return true;
   }
-  console.log(false);
   return false;
 }
 
@@ -110,25 +108,25 @@ function sortStack(stack) {
     if (newStack.top === null) {
       newStack.push(temp);
     } else if (newStack.top.data > temp) {
-      newStack.push(temp)
+      newStack.push(temp);
     }
     else if (newStack.top.data < temp) {
       while (newStack.top.next !== null && newStack.top.data < temp) {
         stack.push(newStack.pop());
       }
       stack.push(newStack.pop())
-      newStack.push(temp)
-      break;
+      stack.push(temp)
+      return stack;
     }
   }
 
-  while (newStack.top.next !== null) {
-    stack.push(newStack.pop());
-  }
+  // while (newStack.top.next !== null) {
+  //   stack.push(newStack.pop());
+  // }
 
-  stack.push(newStack.pop())
+  // stack.push(newStack.pop())
 
-  return stack;
+  // return stack;
 }
 
 // 1, 2, 3, 4, 5 -> (5,4,3,2,1) return sorted peek() top stack.top.peek()
