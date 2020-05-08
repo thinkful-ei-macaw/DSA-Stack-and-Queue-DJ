@@ -83,17 +83,17 @@ function parens(exp) {
   if (stack.top === null) {
     return;
   }
-  for(let i =0; i < arr.length; i++) {
+  for (let i = 0; i < arr.length; i++) {
     let value = stack.pop();
 
-    if(value === '(') {
+    if (value === '(') {
       count++;
     } else {
       count--;
-    } 
+    }
   }
- 
-  if (count === 0 ) {
+
+  if (count === 0) {
     return true;
   } else if (count > 0) {
     return 'You are missing a ")"';
@@ -102,34 +102,88 @@ function parens(exp) {
   }
 }
 
-function main() {
-  let starTrek = new Stack;
-  let emptyTrek = new Stack;
+function sortStack(stack) {
+  let newStack = new Stack;
 
-  starTrek.push('Kirk');
-  starTrek.push('Spock');
-  starTrek.push('McCoy');
-  starTrek.push('Scotty');
+  while (stack.top !== null) {
+    let temp = stack.pop();
+    if (newStack.top === null) {
+      newStack.push(temp);
+    } else if (newStack.top.data > temp) {
+      newStack.push(temp)
+    }
+    else if (newStack.top.data < temp) {
+      while (newStack.top.next !== null && newStack.top.data < temp) {
+        stack.push(newStack.pop());
+      }
+      stack.push(newStack.pop())
+      newStack.push(temp)
+      break;
+    }
+  }
 
-  peek(starTrek);
+  while (newStack.top.next !== null) {
+    stack.push(newStack.pop());
+  }
 
-  isEmpty(starTrek);
-  isEmpty(emptyTrek);
+  stack.push(newStack.pop())
 
-  display(starTrek);
-
-  starTrek.pop();
-  starTrek.pop();
-  starTrek.push('Scotty');
-
-  display(starTrek);
- 
-  return starTrek;
+  return stack;
 }
 
-console.log(main());
-is_palindrome('dad');
-is_palindrome('A man, a plan, a canal: Panama');
-is_palindrome('1001');
-is_palindrome('Tauhida');
-console.log(parens('()()()('));
+// 1, 2, 3, 4, 5 -> (5,4,3,2,1) return sorted peek() top stack.top.peek()
+
+// function main() {
+//   let starTrek = new Stack;
+//   let emptyTrek = new Stack;
+
+//   starTrek.push('Kirk');
+//   starTrek.push('Spock');
+//   starTrek.push('McCoy');
+//   starTrek.push('Scotty');
+
+//   peek(starTrek);
+
+//   isEmpty(starTrek);
+//   isEmpty(emptyTrek);
+
+//   display(starTrek);
+
+//   starTrek.pop();
+//   starTrek.pop();
+//   starTrek.push('Scotty');
+
+//   display(starTrek);
+
+//   return starTrek;
+// }
+
+// console.log(main());
+// is_palindrome('dad');
+// is_palindrome('A man, a plan, a canal: Panama');
+// is_palindrome('1001');
+// is_palindrome('Tauhida');
+// console.log(parens('()()()('));
+
+function stackMain() {
+  let stack = new Stack;
+  //  3     1      4
+  //  2     2      3
+  //  1     3      2
+  //  4     4      1
+  //input  temp  output
+  stack.push(4)
+  stack.push(1)
+  stack.push(2)
+  stack.push(3)
+
+  display(stack)
+
+  sortStack(stack);
+
+  display(stack)
+
+  return stack;
+}
+
+console.log(stackMain())
